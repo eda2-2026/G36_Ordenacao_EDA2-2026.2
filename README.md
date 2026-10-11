@@ -7,6 +7,22 @@ O objetivo do trabalho é aplicar os algoritmos de ordenação estudados em EDA2
 implementando o Merge Sort e analisando sua complexidade, sua estabilidade e seu
 desempenho conforme a quantidade de chamados cresce.
 
+## Entrega parcial — aproximadamente 40%
+
+O percentual é uma estimativa de escopo, dividida em cinco etapas; não representa
+uma medição de horas nem um critério de avaliação da disciplina.
+
+| Etapa | Estado |
+| ----- | ------ |
+| 1. Merge Sort estável, contadores e testes do algoritmo | Concluída |
+| 2. Modelo, validações, fila, CSV e testes de integração | Concluída |
+| 3. CLI e visualização passo a passo | Pendente |
+| 4. Análise de melhor, médio e pior caso | Pendente |
+| 5. Benchmark, gráficos e conclusão da documentação/apresentação | Pendente |
+
+A descrição abaixo apresenta o sistema planejado. Nesta entrega, o núcleo funciona
+por chamadas Python; o menu interativo ainda não foi implementado.
+
 ## Vídeo de apresentação
 
 Link a ser adicionado.
@@ -43,18 +59,51 @@ Requisitos: Python 3.11+.
 
 ```bash
 pip install -r requirements.txt
-python main.py
 ```
+
+Exemplo executável do núcleo atual, a partir da pasta do projeto:
+
+```bash
+python - <<'PY'
+from atendimento import FilaAtendimento
+
+fila = FilaAtendimento()
+fila.carregar_csv("chamados.csv")
+fila.registrar("Fernanda", "Sistema indisponível", 1, "08:50")
+chamados, estatisticas = fila.listar_ordenados()
+for chamado in chamados:
+    print(chamado)
+print(estatisticas)
+atendido, estatisticas = fila.atender_proximo()
+print("Atendido:", atendido)
+print("Operações do atendimento:", estatisticas)
+fila.salvar_csv("/tmp/filachamados-exemplo.csv")
+PY
+```
+
+Os horários devem estar em `HH:MM` e são considerados dentro de um mesmo dia.
+Prioridades aceitas: inteiros de 1 a 4. Cliente e descrição não podem ser vazios.
+O CSV usa UTF-8 e cabeçalho `cliente,descricao,prioridade,horario`; preserva a
+ordem de registro para desempates. Carregar substitui a fila apenas após validar
+todo o arquivo. Arquivo ausente gera `FileNotFoundError`; formato inválido gera
+`ValueError`. Registrar e atender só alteram a memória: use `salvar_csv` para persistir.
+
+`merge_sort` e `listar_ordenados` retornam `(lista, estatisticas)`;
+`atender_proximo` retorna `(chamado, estatisticas)`, com `None` na fila vazia.
+As comparações contam avaliações de chaves entre metades; as movimentações contam
+cada inserção no resultado das intercalações, incluindo sobras. Cópias de fatias
+não entram nessa contagem. Os contadores reiniciam a cada ordenação.
 
 Testes automatizados:
 
 ```bash
-pytest
+python -m pytest
 ```
 
-Análise de melhor, médio e pior caso e experimento de desempenho:
+Comandos previstos para as próximas etapas (arquivos ainda não implementados):
 
 ```bash
+python main.py
 python casos.py
 python benchmark.py
 ```
@@ -62,12 +111,12 @@ python benchmark.py
 ## Estrutura do projeto
 
 ```
-main.py            CLI com menu interativo
+main.py            CLI com menu interativo (pendente)
 merge_sort.py      Merge Sort com contadores de comparações e movimentações
 atendimento.py     chamado, validações, fila de atendimento e CSV
-casos.py           melhor, médio e pior caso do Merge Sort
-benchmark.py       experimento de desempenho e gráficos
+casos.py           melhor, médio e pior caso do Merge Sort (pendente)
+benchmark.py       experimento de desempenho e gráficos (pendente)
 chamados.csv       base de exemplo
 test_*.py          testes automatizados
-resultados/        gráficos gerados pelo benchmark
+resultados/        gráficos gerados pelo benchmark (pendente)
 ```
