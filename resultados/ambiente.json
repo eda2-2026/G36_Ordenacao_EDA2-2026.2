@@ -1,0 +1,17 @@
+{
+  "python": "3.12.3",
+  "plataforma": "Linux-7.0.0-34-generic-x86_64-with-glibc2.39",
+  "matplotlib": "3.11.2",
+  "tamanhos": [
+    128,
+    512,
+    2048,
+    8192,
+    16384
+  ],
+  "amostras": 5,
+  "repeticoes": 3,
+  "semente": 36,
+  "relogio": "perf_counter_ns",
+  "trace": false
+}

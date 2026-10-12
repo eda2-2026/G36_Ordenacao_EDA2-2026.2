@@ -1,2 +1,3 @@
-# A aplicação usa somente a biblioteca padrão; pytest é usado nos testes.
+# A CLI usa somente a biblioteca padrão; extras para testes e gráficos.
 pytest>=7.4,<9
+matplotlib>=3.7,<4
