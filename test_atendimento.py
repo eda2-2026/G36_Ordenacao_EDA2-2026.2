@@ -40,6 +40,16 @@ def test_fila_prioridade_horario_estabilidade_e_atendimento():
     assert fila.atender_proximo() == (None, Estatisticas())
 
 
+def test_listar_ordenados_repassa_trace():
+    fila = FilaAtendimento()
+    fila.registrar("A", "Falha", 2, "10:00")
+    fila.registrar("B", "Falha", 1, "11:00")
+    passos = []
+    ordenados, _ = fila.listar_ordenados(trace=passos)
+    assert [c.cliente for c in ordenados] == ["B", "A"]
+    assert [passo[0] for passo in passos] == ["dividir", "intercalar"]
+
+
 def test_registro_invalido_nao_altera_fila():
     fila = FilaAtendimento()
     with pytest.raises(ValueError):

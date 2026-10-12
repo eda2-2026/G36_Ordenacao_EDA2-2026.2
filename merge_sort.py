@@ -13,7 +13,10 @@ class Estatisticas:
 
 
 def merge_sort(
-    itens: list[T], *, chave: Callable[[T], object] = lambda item: item
+    itens: list[T],
+    *,
+    chave: Callable[[T], object] = lambda item: item,
+    trace: list[tuple] | None = None,
 ) -> tuple[list[T], Estatisticas]:
     """Retorna uma nova lista ordenada e os contadores, sem alterar a entrada.
 
@@ -24,12 +27,14 @@ def merge_sort(
     """
     estatisticas = Estatisticas()
 
-    def ordenar(lista: list[T]) -> list[T]:
+    def ordenar(lista: list[T], nivel: int = 0) -> list[T]:
         if len(lista) <= 1:
             return lista.copy()
         meio = len(lista) // 2
-        esquerda = ordenar(lista[:meio])
-        direita = ordenar(lista[meio:])
+        if trace is not None:
+            trace.append(("dividir", nivel, lista.copy()))
+        esquerda = ordenar(lista[:meio], nivel + 1)
+        direita = ordenar(lista[meio:], nivel + 1)
         resultado = []
         i = j = 0
         while i < len(esquerda) and j < len(direita):
@@ -44,6 +49,10 @@ def merge_sort(
         resultado.extend(esquerda[i:])
         resultado.extend(direita[j:])
         estatisticas.movimentacoes += len(esquerda) - i + len(direita) - j
+        if trace is not None:
+            trace.append(
+                ("intercalar", nivel, esquerda.copy(), direita.copy(), resultado.copy())
+            )
         return resultado
 
     return ordenar(itens), estatisticas

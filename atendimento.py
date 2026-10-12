@@ -51,9 +51,13 @@ class FilaAtendimento:
         self._chamados.append(chamado)
         return chamado
 
-    def listar_ordenados(self) -> tuple[list[Chamado], Estatisticas]:
+    def listar_ordenados(
+        self, trace: list[tuple] | None = None
+    ) -> tuple[list[Chamado], Estatisticas]:
         return merge_sort(
-            self._chamados, chave=lambda chamado: (chamado.prioridade, chamado.horario)
+            self._chamados,
+            chave=lambda chamado: (chamado.prioridade, chamado.horario),
+            trace=trace,
         )
 
     def atender_proximo(self) -> tuple[Chamado | None, Estatisticas]:
