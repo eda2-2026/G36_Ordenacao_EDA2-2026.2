@@ -1,3 +1,7 @@
 __pycache__/
 .pytest_cache/
 .venv/
+
+# Uso local (nao versionar)
+roteiro.md
+demo.csv
