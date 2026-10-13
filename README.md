@@ -10,12 +10,12 @@ desempenho conforme a quantidade de chamados cresce.
 ## Estado do projeto
 
 Implementados: Merge Sort estável com contadores, gestão de chamados e CSV,
-CLI, visualização passo a passo, análise dos casos e benchmark com gráficos.
-A apresentação em vídeo continua pendente.
+CLI, visualização passo a passo, análise dos casos, benchmark com gráficos e
+apresentação em vídeo.
 
 ## Vídeo de apresentação
 
-Link a ser adicionado.
+https://drive.google.com/file/d/1gv6Q2ngZiVevqXgxdwwyXdDUO1VtXvt6/view?usp=sharing
 
 ## Alunos
 
